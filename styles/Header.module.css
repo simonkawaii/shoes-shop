@@ -1,0 +1,26 @@
+.logo {
+  display: flex;
+  stroke-dasharray: 0 110 60 300;
+  stroke-dashoffset: -85;
+  stroke-width: 2;
+  stroke: black;
+  animation: logoAnim 1.5s ease-in-out forwards;
+}
+
+@keyframes logoAnim {
+  0% {
+    stroke-dasharray: 0 110 60 300;
+    stroke-dashoffset: -85;
+    fill: transparent;
+  }
+  85% {
+    stroke-width: 1;
+    fill: transparent;
+  }
+  100% {
+    stroke-dasharray: 50 50 300 300;
+    fill: black;
+    stroke-width: 0;
+    stroke-dashoffset: 100;
+  }
+}
