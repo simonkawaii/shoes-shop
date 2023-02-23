@@ -1,9 +1,10 @@
+import { rejects } from "assert";
 import React, { useEffect, useState } from "react";
 import Logo from "./logo"
 
-const Header = () => {
+const Header =  () => {
   // width change state
-  const [mobileWidth, setMoblieWidth] = useState();
+  const [mobileWidth, setMoblieWidth] = useState<number>(0)
   // menu state
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,17 +13,16 @@ const Header = () => {
     // handle width change to present correct view mobile or desktop
     const handleWindowWidthChange = () => {
       setMoblieWidth(window.innerWidth);
-      console.log("KUTAS");
     };
     window.addEventListener("resize", handleWindowWidthChange);
     return () => window.removeEventListener("resize", handleWindowWidthChange);
   }, []);
 
   return (
-    <div className="flex justify-between items-center py-3 px-10 bg-gray-500">
+    <div className="flex  z-50 sticky shadow-md h-16 top-0 bg-white justify-between items-center p-2 md:p-5">
         <Logo />
       <div>
-        {mobileWidth >= 768 ? (
+        { mobileWidth >= 768 ? (
           <div className="flex gap-5">
             <a href="">abc</a>
             <a href="">abc</a>
