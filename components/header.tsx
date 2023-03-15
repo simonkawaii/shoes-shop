@@ -1,50 +1,52 @@
-import { rejects } from "assert";
-import React, { useEffect, useState } from "react";
-import Logo from "./logo"
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Logo from "./logo";
 
-const Header =  () => {
+const Header: React.FC = () => {
   // width change state
-  const [mobileWidth, setMoblieWidth] = useState<number>(0)
+  const [mobileWidth, setMoblieWidth] = useState<number>(0);
   // menu state
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    setMoblieWidth(window.innerWidth)
+    setMoblieWidth(window.innerWidth);
     // handle width change to present correct view mobile or desktop
-    const handleWindowWidthChange = () => {
+
+    const handleWindowWidthChange = (): void => {
       setMoblieWidth(window.innerWidth);
     };
+
     window.addEventListener("resize", handleWindowWidthChange);
     return () => window.removeEventListener("resize", handleWindowWidthChange);
   }, []);
 
   return (
     <div className="flex  z-50 sticky shadow-md h-16 top-0 bg-white justify-between items-center p-2 md:p-5">
-        <Logo />
+      <Logo />
       <div>
-        { mobileWidth >= 768 ? (
+        {mobileWidth >= 768 ? (
           <div className="flex gap-5">
-            <a href="">abc</a>
-            <a href="">abc</a>
-            <a href="">abc</a>
+            <Link href="/">abc</Link>
+            <Link href="/">abc</Link>
+            <Link href="/">abc</Link>
           </div>
         ) : (
           <div>
-            <button onClick={() => setIsOpen(!isOpen)}>
+            <button type="button" onClick={() => setIsOpen(!isOpen)}>
               menu
               {isOpen && (
                 <ul className="flex flex-col gap-2">
                   <li>
                     {" "}
-                    <a href="">abc</a>
+                    <Link href="/">abc</Link>
                   </li>
                   <li>
                     {" "}
-                    <a href="">abc</a>
+                    <Link href="/">abc</Link>
                   </li>
                   <li>
                     {" "}
-                    <a href="">abc</a>
+                    <Link href="/">abc</Link>
                   </li>
                 </ul>
               )}
