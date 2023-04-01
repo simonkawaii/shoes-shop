@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { useDrag } from "react-dnd";
+import { DragPreviewImage, useDrag, useDragLayer } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmptyImage } from "react-dnd-html5-backend";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import cartSlice, {
   addToCart,
   removeFromCart,
@@ -11,7 +12,16 @@ import cartSlice, {
 import { TproductCard } from "./content";
 import { RootState } from "../store/store";
 
-const Card: React.FC = ({ title, id }) => {
+import { BoxDragPreview } from "./BoxDragPreview.js";
+
+const regularScreen = `relative bg-amber-600 overflow-hidden
+flex justify-center items-center
+ duration-100 hover:cursor-grab h-48 `;
+
+const Card: React.FC = ({ title, id }: TproductCard) => {
+  const { item } = useDragLayer((monitor) => ({
+    item: monitor.getItem(),
+  }));
   const dispatch = useDispatch();
 
   const [{ isDragging }, drag, preview] = useDrag(
@@ -27,38 +37,34 @@ const Card: React.FC = ({ title, id }) => {
     }),
     []
   );
-
-  useEffect(() => {}, []);
   return (
-    <div
-      ref={drag}
-      className={`relative bg-amber-600 flex justify-center items-center duration-100 hover:cursor-grab h-48  ${
-        isDragging && "opacity-100"
-      } `}
-    >
-      <button
-        type="button"
-        onClick={() => {
-          dispatch(
-            addToCart({
-              title,
-              id,
-            })
-          );
-        }}
-        className="absolute right-2 top-2 z-20 h-5 w-5 bg-blue-600 flex justify-center items-center text-red-100"
+    <>
+      <DragPreviewImage connect={preview} />
+      <div
+        ref={drag}
+        className={` ${regularScreen}${isDragging && "opacity-50"} `}
       >
-        +
-      </button>
-      <h1>
-        {title}
+        <button
+          type="button"
+          onClick={() => {
+            dispatch(
+              addToCart({
+                title,
+                id,
+              })
+            );
+          }}
+          className="absolute rounded-md right-3 top-3 z-20 h-10 w-10 bg-white bg-opacity-50 flex justify-center items-center text-red-100 hover:bg-opacity-30"
+        >
+          <AddOutlinedIcon color="action" />
+        </button>
         <img
-          className="rounded-lg pointer-events-none object-cover"
+          className=" rounded-lg pointer-events-none object-cover"
           src="https://unsplash.it/600/300"
           alt=""
         />
-      </h1>
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -43,14 +43,14 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={`flex relative duration-300 
-  ${!open ? "w-14" : "lg:w-80 sm:w-64"}`}
+      className={`flex fixed duration-300  z-10
+  ${!open ? "w-44" : "lg:w-80 sm:w-64"}`}
       ref={drop}
     >
       <div className="flex flex-col items-center overflow-y-auto duration-300 relative bg-orange-400 h-screen pb-24 w-full box-border">
-        {cartItems.map(({ title, cartQuantity }, index) => {
+        {cartItems.map(({ title, cartQuantity, id }) => {
           return (
-            <div key={index} className="flex flex-row gap-5">
+            <div key={id} className="flex flex-row gap-5">
               <h1>{title} </h1>
               <h4>{cartQuantity} </h4>
             </div>
@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
         onClick={() => {
           isOpen(!open);
         }}
-        className="flex top-24 -right-16 absolute h-16 w-16 bg-black"
+        className="flex translate-y-56 -right-16 h-16 w-16 bg-black"
       >
         clicc me
       </button>
