@@ -8,12 +8,14 @@ export const api = axios.create({
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getProductsPage = async (pageParam = 1, options = {}) => {
   const amountOfItemsToShow = 10;
+  const amountOfItemsToSkip = 10;
 
   const response = await api.get(
-    `/?limit=10&skip=${pageParam * amountOfItemsToShow - amountOfItemsToShow}`,
+    `/?limit=10&skip=${pageParam * amountOfItemsToShow - amountOfItemsToSkip}`,
     options
   );
   console.log(response.data.products);
   console.log(pageParam);
-  return response.data;
+
+  return response;
 };

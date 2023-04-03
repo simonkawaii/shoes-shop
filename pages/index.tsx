@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-[110vh] flex-col">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />

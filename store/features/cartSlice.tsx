@@ -25,29 +25,41 @@ export const cartSlice = createSlice({
       }
       console.log("added to cart");
     },
-    removeFromCart: (state) => {
-      console.log("removed from cart");
-    },
-    incrementItemInCart: (state) => {
-      console.log("added the same item to cart");
-    },
-    decrementItemInCart: (state) => {
-      console.log("removed the same item to cart");
-    },
-    modifyItemsInCart: (state) => {
+    removeFromCart: (state, action) => {
       const { cartItems, totalCartQuantity, totalAmount } = state;
 
       const itemIndex = cartItems.findIndex((item) => {
         return item.id === action.payload.id;
       });
-      const incrementItemInCart = () => {
-        console.log("added the same item to cart");
+
+      if (itemIndex !== -1) {
+        cartItems.splice(itemIndex, 1);
+      }
+      console.log("removed from cart");
+    },
+    incrementItemInCart: (state, action) => {
+      const { cartItems, totalCartQuantity, totalAmount } = state;
+
+      const itemIndex = cartItems.findIndex((item) => {
+        return item.id === action.payload.id;
+      });
+      if (itemIndex !== -1) {
         cartItems[itemIndex].cartQuantity += 1;
-      };
-      const decrementItemInCart = () => {
-        console.log("removed the same item to cart");
+      }
+    },
+    decrementItemInCart: (state, action) => {
+      const { cartItems, totalCartQuantity, totalAmount } = state;
+
+      const itemIndex = cartItems.findIndex((item) => {
+        return item.id === action.payload.id;
+      });
+      if (itemIndex !== -1) {
         cartItems[itemIndex].cartQuantity -= 1;
-      };
+      }
+
+      if (cartItems[itemIndex].cartQuantity <= 0) {
+        cartItems.splice(itemIndex, 1);
+      }
     },
   },
 });
@@ -56,7 +68,7 @@ export const {
   addToCart,
   removeFromCart,
   incrementItemInCart,
-  modifyItemsInCart,
+  decrementItemInCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -35,21 +35,19 @@ const Header: React.FC = () => {
       <div>
         {mobileWidth >= 768 ? (
           <div className="flex gap-5">
-            <Link href="/">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsOpenCart(!openCart);
-                  setIsOpen(false);
-                }}
-              >
-                <div className="">
-                  <Badge badgeContent={cartItems.length} color="primary">
-                    <ShoppingCartIcon />
-                  </Badge>
-                </div>
-              </button>
-            </Link>
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpenCart(!openCart);
+                setIsOpen(false);
+              }}
+            >
+              <div className="">
+                <Badge badgeContent={cartItems.length} color="primary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </div>
+            </button>
             {openCart && (
               <div className="absolute  gap-2 translate-y-7  -translate-x-2/4 bg-gray-400 rounded-md p-5 overflow-hidden">
                 {cartItems.map(({ title, cartQuantity, id }) => {

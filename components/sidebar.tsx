@@ -2,7 +2,12 @@ import { useDrop } from "react-dnd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { addToCart } from "../store/features/cartSlice";
+import {
+  addToCart,
+  incrementItemInCart,
+  decrementItemInCart,
+  removeFromCart,
+} from "../store/features/cartSlice";
 
 export interface TcartItem {
   id: number;
@@ -15,7 +20,7 @@ const Sidebar: React.FC = () => {
   const cartContainer = useSelector((state: RootState) => state.cart);
   const { cartItems } = cartContainer;
 
-  const [open, isOpen] = useState<boolean>(true);
+  const [open, isOpen] = useState<boolean>(false);
 
   const [cartList, setCartList] = useState(cartContainer);
 
@@ -41,18 +46,75 @@ const Sidebar: React.FC = () => {
     );
   };
 
+  const decrementItem = ({ id, title }: TcartItem): void => {
+    dispatch(
+      decrementItemInCart({
+        id,
+        title,
+      })
+    );
+  };
+
   return (
     <div
       className={`flex fixed duration-300  z-10
-  ${!open ? "w-44" : "lg:w-80 sm:w-64"}`}
+  ${!open ? "w-24" : "lg:w-80 sm:w-64"}`}
       ref={drop}
     >
-      <div className="flex flex-col items-center overflow-y-auto duration-300 relative bg-orange-400 h-screen pb-24 w-full box-border">
+      <div className="flex flex-col items-center overflow-y-auto duration-300 relative bg-white shadow-2xl h-screen pb-24 w-full box-border">
+        <p>shopping cart</p>
         {cartItems.map(({ title, cartQuantity, id }) => {
           return (
-            <div key={id} className="flex flex-row gap-5">
+            <div key={id} className="flex flex-col m-5 gap-2 w-[90%]">
               <h1>{title} </h1>
-              <h4>{cartQuantity} </h4>
+              <div className="flex flex-row w-full content-evenly">
+                <div className="w-full">amount: </div>
+                <div className="w-full">{cartQuantity}</div>
+              </div>
+              <div className="flex flex-row w-full gap-2 content-evenly [&>*]:w-full">
+                <button
+                  type="button"
+                  className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                  onClick={() => {
+                    dispatch(
+                      incrementItemInCart({
+                        title,
+                        id,
+                      })
+                    );
+                  }}
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                  onClick={() => {
+                    dispatch(
+                      decrementItemInCart({
+                        title,
+                        id,
+                      })
+                    );
+                  }}
+                >
+                  -
+                </button>
+                <button
+                  type="button"
+                  className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                  onClick={() => {
+                    dispatch(
+                      removeFromCart({
+                        title,
+                        id,
+                      })
+                    );
+                  }}
+                >
+                  X
+                </button>
+              </div>
             </div>
           );
         })}

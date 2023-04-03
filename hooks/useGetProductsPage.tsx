@@ -18,15 +18,11 @@ const useGetProductsPage = (pageNumber = 1): any => {
     const { signal } = controller;
 
     getProductsPage(pageNumber, { signal })
-      .then((data) => {
-        console.log(pageNumber);
-        console.log("hook", data);
+      .then(({ data }) => {
         setResults((prev): any => {
-          console.log(prev, "prev");
           return [...new Set([...prev, ...data.products])];
         });
         setHasNextPage(data.products.length > 0);
-        console.log(data.products.length);
         setIsLoading(false);
       })
       .catch((e) => {
@@ -35,7 +31,6 @@ const useGetProductsPage = (pageNumber = 1): any => {
         setIsError(true);
         setError({ message: e.message });
       });
-
     return () => controller.abort();
   }, [pageNumber]);
 

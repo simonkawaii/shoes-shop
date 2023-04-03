@@ -1,10 +1,12 @@
 .logo {
   display: flex;
   stroke-dasharray: 0 110 60 300;
+  transition: 0.5s ease-in-out;
   stroke-dashoffset: -85;
   box-sizing: border-box;
   stroke: black;
   animation: logoAnim 1.5s ease-in-out forwards;
+  transition: all 1.5s;
   stroke-linecap: round;
 }
 
@@ -23,5 +25,13 @@
     stroke-width: 0;
     fill: black;
     stroke-dashoffset: 100;
+  }
+}
+@keyframes logoHover {
+  0% {
+  }
+  85% {
+  }
+  100% {
   }
 }
