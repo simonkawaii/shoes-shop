@@ -37,24 +37,40 @@ const Content: React.FC = () => {
   );
 
   const renderContent = results?.map(
-    ({ title, id, images }: TproductCard, index: number) => {
+    (
+      { title, id, thumbnail, category, price, brand }: TproductCard,
+      index: number
+    ) => {
       if (results.length === index + 1) {
         return (
           <Product
             ref={lastPostRef}
+            category={category}
+            price={price}
             title={title}
             id={id}
             key={id}
-            image={images[0]}
+            thumbnail={thumbnail}
+            brand={brand}
           />
         );
       }
-      return <Product title={title} id={id} key={id} image={images[0]} />;
+      return (
+        <Product
+          category={category}
+          price={price}
+          title={title}
+          id={id}
+          key={id}
+          thumbnail={thumbnail}
+          brand={brand}
+        />
+      );
     }
   );
 
   return (
-    <section className="grid-cols-1 grid w-full h-min-full sm:grid-cols-4 gap-5 m-5 md:ml-48">
+    <section className="grid-cols-1 grid w-full h-min-full md:grid-cols-3 lg:grid-cols-4 gap-5 m-5 md:ml-48">
       {results && renderContent}
       {isLoading && <DummyCard cards={10} />}
 

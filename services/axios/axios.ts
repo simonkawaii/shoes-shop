@@ -14,8 +14,6 @@ export const getProductsPage = async (pageParam = 1, options = {}) => {
     `/?limit=10&skip=${pageParam * amountOfItemsToShow - amountOfItemsToSkip}`,
     options
   );
-  console.log(response.data.products);
-  console.log(pageParam);
 
   return response;
 };

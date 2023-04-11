@@ -7,10 +7,17 @@ const dummyCard: React.FC = ({ cards }: any) => {
           return (
             // eslint-disable-next-line react/self-closing-comp
             <div
+              className="flex flex-col animate-pulse opacity-0"
               key={index}
-              className=" bg-gray-400 rounded-md animate-pulse w-74 h-52  text-transparent opacity-0"
               style={{ animationDelay: `${index * 0.05}s` }}
-            ></div>
+            >
+              <div className=" bg-gray-400 rounded-md  w-74 h-52  text-transparent " />
+              <div className="flex flex-col gap-3 mt-3">
+                <span className=" bg-gray-400  rounded-sm  w-full h-5  text-transparent " />
+                <span className=" bg-gray-400 rounded-sm  w-full h-5  text-transparent" />
+                <span className=" bg-gray-400 rounded-sm  w-full h-5  text-transparent " />
+              </div>
+            </div>
           );
         })}
     </>

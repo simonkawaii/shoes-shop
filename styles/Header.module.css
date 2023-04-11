@@ -4,9 +4,11 @@
   transition: 0.5s ease-in-out;
   stroke-dashoffset: -85;
   box-sizing: border-box;
-  stroke: black;
   animation: logoAnim 1.5s ease-in-out forwards;
   transition: all 1.5s;
+  fill: black;
+  stroke: black;
+  transform: scale(1.1);
   stroke-linecap: round;
 }
 
@@ -23,7 +25,6 @@
   100% {
     stroke-dasharray: 50 50 300 300;
     stroke-width: 0;
-    fill: black;
     stroke-dashoffset: 100;
   }
 }

@@ -17,20 +17,23 @@ const useGetProductsPage = (pageNumber = 1): any => {
     const controller = new AbortController();
     const { signal } = controller;
 
-    getProductsPage(pageNumber, { signal })
-      .then(({ data }) => {
-        setResults((prev): any => {
-          return [...new Set([...prev, ...data.products])];
+    setTimeout(() => {
+      getProductsPage(pageNumber, { signal })
+        .then(({ data }) => {
+          setResults((prev): any => {
+            return [...new Set([...prev, ...data.products])];
+          });
+          setHasNextPage(data.products.length > 0);
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          setIsLoading(false);
+          if (signal.aborted) return;
+          setIsError(true);
+          setError({ message: e.message });
         });
-        setHasNextPage(data.products.length > 0);
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        setIsLoading(false);
-        if (signal.aborted) return;
-        setIsError(true);
-        setError({ message: e.message });
-      });
+    }, 2000);
+
     return () => controller.abort();
   }, [pageNumber]);
 

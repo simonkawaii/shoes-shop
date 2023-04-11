@@ -29,9 +29,19 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex  z-50 sticky shadow-md h-16 top-0 bg-white justify-between items-center p-2 md:p-5">
+    <div className="flex  z-[9999] sticky shadow-md h-16 top-0 bg-white justify-between items-center p-2 md:p-5">
       <Logo />
-
+      <div>
+        <form action="">
+          <input
+            className="shadow appearance-none border rounded-[99em] w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
+            type="text"
+            name=""
+            id=""
+            placeholder="search"
+          />
+        </form>
+      </div>
       <div>
         {mobileWidth >= 768 ? (
           <div className="flex gap-5">
@@ -61,27 +71,25 @@ const Header: React.FC = () => {
               </div>
             )}
 
-            <Link href="/">abc</Link>
-            <Link href="/">abc</Link>
-            <Link href="/">abc</Link>
+            <Link href="/">Home</Link>
+            <Link href="/">About</Link>
+            <Link href="/">Contact</Link>
           </div>
         ) : (
           <div className="flex row-auto gap-5">
-            <Link href="/">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsOpenCart(!openCart);
-                  setIsOpen(false);
-                }}
-              >
-                <div className="">
-                  <Badge badgeContent={cartItems.length} color="primary">
-                    <ShoppingCartIcon />
-                  </Badge>
-                </div>
-              </button>
-            </Link>
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpenCart(!openCart);
+                setIsOpen(false);
+              }}
+            >
+              <div className="">
+                <Badge badgeContent={cartItems.length} color="primary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </div>
+            </button>
             {openCart && (
               <div className="absolute  gap-2 translate-y-7  -translate-x-2/4 bg-gray-400 rounded-md p-5 overflow-hidden">
                 {cartItems.length === 0 ? (
@@ -110,15 +118,15 @@ const Header: React.FC = () => {
             </button>
 
             {isOpen && (
-              <ul className="absolute translate-y-7 translate-x-1/4  bg-gray-400 rounded-md p-5 overflow-hidden">
+              <ul className="absolute translate-y-7  bg-gray-400 rounded-md p-5 overflow-hidden">
                 <li>
-                  <Link href="/">abc</Link>
+                  <Link href="/">Home</Link>
                 </li>
                 <li>
-                  <Link href="/">abc</Link>
+                  <Link href="/">About</Link>
                 </li>
                 <li>
-                  <Link href="/">abc</Link>
+                  <Link href="/">Contact</Link>
                 </li>
               </ul>
             )}

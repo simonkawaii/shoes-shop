@@ -1,0 +1,16 @@
+.card {
+  animation: cardEnter 0.2s ease-in-out;
+  z-index: 9999;
+  background-color: white;
+}
+
+@keyframes cardEnter {
+  0% {
+    transform: translateY(-100%) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

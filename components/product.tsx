@@ -1,19 +1,37 @@
 import * as React from "react";
 import Card from "./card";
 
-const product = React.forwardRef(({ title, id, image }, ref) => {
-  // this ref stands for infinite scroll hook
-  const content = ref ? (
-    <div ref={ref}>
-      <Card title={title} id={id} image={image} />
-    </div>
-  ) : (
-    <div>
-      <Card title={title} id={id} image={image} />
-    </div>
-  );
+const product = React.forwardRef(
+  ({ title, id, thumbnail, category, brand, price }, ref) => {
+    // this ref stands for infinite scroll hook
+    const content = ref ? (
+      <div ref={ref}>
+        <Card
+          category={category}
+          price={price}
+          title={title}
+          id={id}
+          key={id}
+          thumbnail={thumbnail}
+          brand={brand}
+        />
+      </div>
+    ) : (
+      <div>
+        <Card
+          category={category}
+          price={price}
+          title={title}
+          id={id}
+          key={id}
+          thumbnail={thumbnail}
+          brand={brand}
+        />
+      </div>
+    );
 
-  return content;
-});
+    return content;
+  }
+);
 
 export default product;
