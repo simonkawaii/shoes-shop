@@ -1,7 +1,6 @@
 .card {
   animation: cardEnter 0.2s ease-in-out;
   z-index: 9999;
-  background-color: white;
 }
 
 @keyframes cardEnter {

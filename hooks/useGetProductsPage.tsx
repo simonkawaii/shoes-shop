@@ -32,7 +32,7 @@ const useGetProductsPage = (pageNumber = 1): any => {
           setIsError(true);
           setError({ message: e.message });
         });
-    }, 2000);
+    }, 3300);
 
     return () => controller.abort();
   }, [pageNumber]);

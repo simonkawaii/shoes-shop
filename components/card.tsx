@@ -11,6 +11,7 @@ import cartSlice, {
   incrementItemInCart,
 } from "../store/features/cartSlice";
 import { TproductCard } from "./content";
+import { ItemTypes } from "./itemTypes";
 
 const regularScreen = `relative overflow-hidden
 flex justify-center items-center
@@ -23,6 +24,8 @@ const Card: React.FC = memo(function Card({
   category,
   price,
   brand,
+  left,
+  top,
 }: TproductCard) {
   const { item } = useDragLayer((monitor) => ({
     item: monitor.getItem(),
@@ -31,19 +34,23 @@ const Card: React.FC = memo(function Card({
 
   const [{ isDragging }, drag, preview] = useDrag(
     () => ({
-      type: "div",
+      type: ItemTypes.BOX,
       item: {
         title,
         price,
         id,
+        left,
+        top,
+        thumbnail,
+        brand,
       },
       collect: (watching) => ({
         isDragging: !!watching.isDragging(),
       }),
+      previewOptions: {},
     }),
     []
   );
-
   const [loadData, setLoadData] = useState<number>(0);
 
   const addItemToCart = (): void => {
@@ -56,18 +63,28 @@ const Card: React.FC = memo(function Card({
     );
   };
   useEffect(() => {
-    console.log("lol");
-    const dragginnn = window.addEventListener("dragstart", (e) => {
-      console.log(e.target.parentElement.parentElement);
-    });
-    removeEventListener("dragstart", dragginnn);
-  }, [isDragging]);
+    preview(getEmptyImage(), { captureDraggingState: true });
+  }, []);
+
+  const getStyles = (left, top, isDragging) => {
+    const transform = `translate3d(${left}px, ${top}px, 0) `;
+    return {
+      transform,
+      WebkitTransform: transform,
+      // IE fallback: hide the real node using CSS when dragging
+      // because IE will ignore our custom "empty image" drag preview.
+      opacity: isDragging ? 0 : 1,
+      transition: isDragging && "0s",
+    };
+  };
 
   return (
     <div
+      style={getStyles(left, top, isDragging)}
       ref={preview}
-      className={`shadow-md rounded-lg  cursor-pointer duration-200  hover:scale-105 hover:shadow-xl
-      
+      className={` 
+      bg-white
+      shadow-md rounded-lg  cursor-pointer duration-200  hover:scale-105 hover:shadow-xl
       `}
     >
       <div
@@ -124,7 +141,8 @@ const Card: React.FC = memo(function Card({
         </button>
 
         <img
-          className={`rounded-tl-lg rounded-tr-lg pointer-events-none object-cover h-full w-full
+          className={`
+          rounded-tl-lg rounded-tr-lg pointer-events-none object-cover h-full w-full
           
           `}
           src={thumbnail}
@@ -143,7 +161,7 @@ const Card: React.FC = memo(function Card({
           <span className=" text-xl">
             <b>
               $
-              {price.toLocaleString(undefined, {
+              {price?.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}

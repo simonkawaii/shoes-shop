@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useSelector } from "react-redux";
+
 import Badge from "@mui/material/Badge";
 import cartSlice from "../store/features/cartSlice";
 import { RootState } from "../store/store";
@@ -31,20 +32,22 @@ const Header: React.FC = () => {
   return (
     <div className="flex  z-[9999] sticky shadow-md h-16 top-0 bg-white justify-between items-center p-2 md:p-5">
       <Logo />
-      <div>
-        <form action="">
-          <input
-            className="shadow appearance-none border rounded-[99em] w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
-            type="text"
-            name=""
-            id=""
-            placeholder="search"
-          />
-        </form>
-      </div>
+      {mobileWidth >= 768 && (
+        <div>
+          <form action="">
+            <input
+              className="shadow appearance-none border rounded-[99em] w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
+              type="text"
+              name=""
+              id=""
+              placeholder="search"
+            />
+          </form>
+        </div>
+      )}
       <div>
         {mobileWidth >= 768 ? (
-          <div className="flex gap-5">
+          <div className="flex gap-5 ">
             <button
               type="button"
               onClick={() => {
@@ -72,8 +75,8 @@ const Header: React.FC = () => {
             )}
 
             <Link href="/">Home</Link>
-            <Link href="/">About</Link>
-            <Link href="/">Contact</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
           </div>
         ) : (
           <div className="flex row-auto gap-5">
@@ -85,7 +88,7 @@ const Header: React.FC = () => {
               }}
             >
               <div className="">
-                <Badge badgeContent={cartItems.length} color="primary">
+                <Badge badgeContent={cartItems.length} color="warning">
                   <ShoppingCartIcon />
                 </Badge>
               </div>
@@ -123,10 +126,10 @@ const Header: React.FC = () => {
                   <Link href="/">Home</Link>
                 </li>
                 <li>
-                  <Link href="/">About</Link>
+                  <Link href="/about">About</Link>
                 </li>
                 <li>
-                  <Link href="/">Contact</Link>
+                  <Link href="/contact">Contact</Link>
                 </li>
               </ul>
             )}

@@ -13,6 +13,7 @@ import {
   removeFromCart,
   cartTotal,
 } from "../store/features/cartSlice";
+import { ItemTypes } from "./itemTypes";
 
 export interface TcartItem {
   id: number;
@@ -48,7 +49,8 @@ const Sidebar: React.FC = () => {
   }, [cartContainer]);
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: "div",
+    accept: ItemTypes.BOX,
+
     drop: ({ id, title, price }: TcartItem) => {
       addItemToCart({
         id,
@@ -70,12 +72,18 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={` flex fixed duration-300  lg:w-80 drop-shadow-xl
-      z-[9999] h-screen
+      className={` flex fixed duration-300   sm:w-[350px] drop-shadow-xl
+        text-white
+        z-[90] h-screen
   ${!open && "-translate-x-[50%]"} `}
       ref={drop}
     >
-      <div className="flex flex-col items-center  duration-300 relative bg-white  pb-24 w-full box-border">
+      <div
+        className={`flex 
+        ${open ? "bg-purple-600" : "bg-purple-400"}
+
+      flex-col items-center  duration-300 relative  pb-24 w-full box-border`}
+      >
         <p className="m-5">cart</p>
         <div
           className={`flex relative flex-col items-center overflow-y-auto w-[90%] overflow-x-hidden duration-200 ${
@@ -83,20 +91,21 @@ const Sidebar: React.FC = () => {
           }`}
         >
           {cartItems.map(({ title, cartQuantity, id }) => {
-            const cartItem = cartItems.findIndex((item) => item.id);
-            console.log(cartItems[cartItem].cartQuantity);
             return (
               <div
                 key={id}
                 className={` 
       ${styles.card}
-                flex   flex-col m-5 gap-2 w-[90%]  content-center items-center`}
+                flex  p-5 rounded-lg
+                shadow-md
+                text-black
+                bg-white
+                flex-col m-5 gap-2 w-[90%]  content-center items-center`}
               >
                 <h1>{title} </h1>
                 <div className="flex flex-row w-full">
                   <div
                     className={`w-full justify-center flex gap-3
-                
              
                 `}
                   >
@@ -151,8 +160,13 @@ const Sidebar: React.FC = () => {
             );
           })}
         </div>
-        <div className="absolute flex items-center  bottom-14 h-20 w-full left-0 ">
-          <p className="m-3 font-bold text-lg">Total: ${totalAmount}</p>
+        <div
+          className="absolute 
+          bg-[inherit]
+          z-[9999]
+      flex items-center justify-end  bottom-14 h-20 w-full left-0 "
+        >
+          <p className="m-3 font-bold text-lg ">Total: ${totalAmount}</p>
         </div>
       </div>
       <button
@@ -160,7 +174,10 @@ const Sidebar: React.FC = () => {
         onClick={() => {
           isOpen(!open);
         }}
-        className="flex justify-center items-center translate-y-56 rounded-tr-[50%] rounded-br-[50%] -right-16 h-16 w-16 p-3 bg-white"
+        className={`flex 
+      ${open ? "bg-purple-600" : "bg-purple-400"}
+      duration-300
+        justify-center items-center translate-y-56 rounded-tr-[50%] rounded-br-[50%] -right-16 h-16 w-16 p-3`}
       >
         {!open ? <p>open cart </p> : <p>close cart</p>}
       </button>

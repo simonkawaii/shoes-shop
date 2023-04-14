@@ -2,7 +2,7 @@ import * as React from "react";
 import Card from "./card";
 
 const product = React.forwardRef(
-  ({ title, id, thumbnail, category, brand, price }, ref) => {
+  ({ title, id, thumbnail, category, brand, price, left, top }, ref) => {
     // this ref stands for infinite scroll hook
     const content = ref ? (
       <div ref={ref}>

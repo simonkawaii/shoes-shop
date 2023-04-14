@@ -1,10 +1,26 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Content from "../components/content";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
+import CustomDragLayer from "../components/customDragLayer";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      // Purple and green play nicely together.
+      main: "rgb(147 51 234)",
+      contrastText: "rgb(255,255,255)",
+    },
+    secondary: {
+      // This is green.A700 as hex.
+      main: "#11cb5f",
+    },
+  },
+});
 
 const Home: NextPage = () => {
   const [mobileWidth, setMoblieWidth] = useState<number>(0);
@@ -21,21 +37,24 @@ const Home: NextPage = () => {
 
   return (
     <div className="flex min-h-[110vh] flex-col">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      {/* header */}
+      <ThemeProvider theme={theme}>
+        <Head>
+          <title>Create Next App</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        {/* header */}
+        <CustomDragLayer />
 
-      <Header />
-      <div className="flex flex-column">
-        {/* shopping-cart-sidebar */}
-        {mobileWidth > 768 && <Sidebar />}
-        {/* content-list */}
-        <Content />
-      </div>
+        <Header />
+        <div className="flex flex-column">
+          {/* shopping-cart-sidebar */}
+          {mobileWidth > 768 && <Sidebar />}
+          {/* content-list */}
+          <Content />
+        </div>
 
-      {/* mobile cart */}
+        {/* mobile cart */}
+      </ThemeProvider>
     </div>
   );
 };

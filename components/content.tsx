@@ -3,9 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import cartSlice from "../store/features/cartSlice";
 import { RootState } from "../store/store";
 import Card from "./card";
+import DummyCard from "./dummyCard";
 import useGetProductsPage from "../hooks/useGetProductsPage";
 import Product from "./product";
-import DummyCard from "./dummyCard";
 
 export interface TproductCard {
   title: string;
