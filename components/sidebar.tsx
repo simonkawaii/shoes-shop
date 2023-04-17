@@ -1,5 +1,6 @@
 import { useDrop } from "react-dnd";
 import React, { useState } from "react";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -68,13 +69,14 @@ const Sidebar: React.FC = () => {
   };
 
   const regularButtonStyle =
-    "  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
+    "  bg-transparent relative duration-200 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
 
   return (
     <div
       className={` flex fixed duration-300   sm:w-[350px] drop-shadow-xl
         text-white
         z-[90] h-screen
+        
   ${!open && "-translate-x-[50%]"} `}
       ref={drop}
     >
@@ -86,9 +88,11 @@ const Sidebar: React.FC = () => {
       >
         <p className="m-5">cart</p>
         <div
-          className={`flex relative flex-col items-center overflow-y-auto w-[90%] overflow-x-hidden duration-200 ${
-            !open && "opacity-50"
-          }`}
+          className={`flex
+          mb-[50px]
+          relative flex-col items-center ${
+            open ? "overflow-y-auto" : "overflow-y-hidden"
+          } w-[90%] overflow-x-hidden duration-200 ${!open && "opacity-50"}`}
         >
           {cartItems.map(({ title, cartQuantity, id }) => {
             return (
@@ -103,31 +107,54 @@ const Sidebar: React.FC = () => {
                 flex-col m-5 gap-2 w-[90%]  content-center items-center`}
               >
                 <h1>{title} </h1>
-                <div className="flex flex-row w-full">
+                <div
+                  className="flex flex-row w-full 
+                "
+                >
                   <div
-                    className={`w-full justify-center flex gap-3
+                    className={`w-full justify-center flex gap-3 
+
              
                 `}
                   >
-                    <button
-                      type="button"
-                      className={`${regularButtonStyle}`}
-                      onClick={() => {
-                        dispatch(
-                          decrementItemInCart({
-                            title,
-                            id,
-                          })
-                        );
-                      }}
-                    >
-                      <RemoveIcon fontSize="small" />
-                    </button>
+                    {cartQuantity >= 2 ? (
+                      <button
+                        type="button"
+                        disabled={!open && true}
+                        className={`${regularButtonStyle}`}
+                        onClick={() => {
+                          dispatch(
+                            decrementItemInCart({
+                              title,
+                              id,
+                            })
+                          );
+                        }}
+                      >
+                        <RemoveIcon fontSize="small" />
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className={`${regularButtonStyle}  hover:bg-red-500 text-red-700 border-red-500`}
+                        onClick={() => {
+                          dispatch(
+                            removeFromCart({
+                              title,
+                              id,
+                            })
+                          );
+                        }}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </button>
+                    )}
                     <span className="flex  justify-center items-center">
                       {cartQuantity}
                     </span>
                     <button
                       type="button"
+                      disabled={!open && true}
                       className={`${regularButtonStyle}`}
                       onClick={() => {
                         dispatch(
@@ -140,20 +167,22 @@ const Sidebar: React.FC = () => {
                     >
                       <AddIcon fontSize="small" />
                     </button>
-                    <button
-                      type="button"
-                      className={`${regularButtonStyle}  hover:bg-red-500 text-red-700 border-red-500`}
-                      onClick={() => {
-                        dispatch(
-                          removeFromCart({
-                            title,
-                            id,
-                          })
-                        );
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </button>
+                    {cartQuantity >= 2 && (
+                      <button
+                        type="button"
+                        className={`${regularButtonStyle}  hover:bg-red-500 text-red-700 border-red-500`}
+                        onClick={() => {
+                          dispatch(
+                            removeFromCart({
+                              title,
+                              id,
+                            })
+                          );
+                        }}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -177,9 +206,28 @@ const Sidebar: React.FC = () => {
         className={`flex 
       ${open ? "bg-purple-600" : "bg-purple-400"}
       duration-300
-        justify-center items-center translate-y-56 rounded-tr-[50%] rounded-br-[50%] -right-16 h-16 w-16 p-3`}
+        justify-center items-center translate-y-56 -translate-x-1  rounded-tr-[50%] rounded-br-[50%]  h-16 w-16 p-3 overflow-hidden `}
       >
-        {!open ? <p>open cart </p> : <p>close cart</p>}
+        <div
+          className={`flex justify-center items-center duration-200 w-[inherit] h-[inherit] p-3 rounded-[inherit] drop-shadow-md hover:scale-125 hover:translate-x-1 ${
+            open && "hover:-translate-x-1"
+          }`}
+        >
+          {!open ? (
+            <ArrowBackIosNewIcon
+              sx={{
+                transform: "rotate(180deg) ",
+                transition: ".2s",
+              }}
+            />
+          ) : (
+            <ArrowBackIosNewIcon
+              sx={{
+                transition: ".2s",
+              }}
+            />
+          )}
+        </div>
       </button>
     </div>
   );

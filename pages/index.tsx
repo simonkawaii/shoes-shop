@@ -11,12 +11,10 @@ import CustomDragLayer from "../components/customDragLayer";
 const theme = createTheme({
   palette: {
     primary: {
-      // Purple and green play nicely together.
       main: "rgb(147 51 234)",
       contrastText: "rgb(255,255,255)",
     },
     secondary: {
-      // This is green.A700 as hex.
       main: "#11cb5f",
     },
   },

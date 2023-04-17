@@ -30,6 +30,7 @@ const Card: React.FC = memo(function Card({
   const { item } = useDragLayer((monitor) => ({
     item: monitor.getItem(),
   }));
+
   const dispatch = useDispatch();
 
   const [{ isDragging }, drag, preview] = useDrag(
@@ -52,7 +53,19 @@ const Card: React.FC = memo(function Card({
     []
   );
   const [loadData, setLoadData] = useState<number>(0);
+  const [mobileWidth, setMoblieWidth] = useState<number>(0);
 
+  useEffect(() => {
+    setMoblieWidth(window.innerWidth);
+    // handle width change to present correct view mobile or desktop
+
+    const handleWindowWidthChange = (): void => {
+      setMoblieWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowWidthChange);
+    return () => window.removeEventListener("resize", handleWindowWidthChange);
+  }, []);
   const addItemToCart = (): void => {
     dispatch(
       addToCart({
@@ -96,9 +109,10 @@ const Card: React.FC = memo(function Card({
           "bg-gray-400 rounded-md animate-pulse w-74 h-52  text-transparent"
         }`}
       >
-        <div
-          ref={drag}
-          className={`
+        {mobileWidth >= 768 && (
+          <div
+            ref={drag}
+            className={`
           z-100
       
           absolute rounded-md right-3
@@ -109,16 +123,17 @@ const Card: React.FC = memo(function Card({
            z-50 h-10 w-10 bg-gray-200/40
            shadow-md flex justify-center items-center
            hover:scale-110`}
-        >
-          <DragIndicatorIcon
-            sx={{
-              color: "rgba(229, 231, 235,1)",
-            }}
-            style={{
-              filter: "drop-shadow(1px 1px 1px gray) ",
-            }}
-          />
-        </div>
+          >
+            <DragIndicatorIcon
+              sx={{
+                color: "rgba(229, 231, 235,1)",
+              }}
+              style={{
+                filter: "drop-shadow(1px 1px 1px gray) ",
+              }}
+            />
+          </div>
+        )}
         <button
           type="button"
           onClick={addItemToCart}
