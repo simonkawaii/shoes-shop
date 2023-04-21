@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getProductsPage } from "../services/axios/axios";
 
 const useGetProductsPage = (pageNumber = 1): any => {
@@ -17,22 +17,20 @@ const useGetProductsPage = (pageNumber = 1): any => {
     const controller = new AbortController();
     const { signal } = controller;
 
-    setTimeout(() => {
-      getProductsPage(pageNumber, { signal })
-        .then(({ data }) => {
-          setResults((prev): any => {
-            return [...new Set([...prev, ...data.products])];
-          });
-          setHasNextPage(data.products.length > 0);
-          setIsLoading(false);
-        })
-        .catch((e) => {
-          setIsLoading(false);
-          if (signal.aborted) return;
-          setIsError(true);
-          setError({ message: e.message });
+    getProductsPage(pageNumber, { signal })
+      .then(({ data }) => {
+        setResults((prev): any => {
+          return [...new Set([...prev, ...data.products])];
         });
-    }, 3300);
+        setHasNextPage(data.products.length > 0);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setIsLoading(false);
+        if (signal.aborted) return;
+        setIsError(true);
+        setError({ message: e.message });
+      });
 
     return () => controller.abort();
   }, [pageNumber]);

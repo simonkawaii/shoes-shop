@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDragLayer } from "react-dnd";
-import { ItemTypes } from "./itemTypes";
+import ItemTypes from "./itemTypes";
 import CardDragPreview from "./cardDragPreview";
 
 const layerStyles = {

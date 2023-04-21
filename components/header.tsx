@@ -30,23 +30,23 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex  z-[9999] sticky shadow-md h-16 top-0 bg-white justify-between items-center p-2 md:p-5">
+    <div className="sticky  top-0 z-[9999] flex h-16 items-center justify-between bg-white p-2 shadow-md md:p-5">
       <Logo />
       {mobileWidth >= 768 && (
-        <div className="relative shadow border w-[350px] flex justify-center rounded-[99em] items-center overflow-hidden z-50">
+        <div className="relative z-50 flex w-[350px] items-center justify-center overflow-hidden rounded-[99em] border shadow">
           <form action="" className="w-[100%]">
             <input
-              className=" appearance-none   w-[100%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
+              className=" focus:shadow-outline   w-[100%] appearance-none py-2 px-3 leading-tight text-gray-700 focus:outline-none "
               type="text"
               name=""
               id=""
               placeholder="search"
             />
           </form>
-          <div className="absolute border-l-2   right-0 w-[50px] justify-center items-center flex h-[100%] ">
+          <div className="absolute right-0   flex h-[100%] w-[50px] items-center justify-center border-l-2 ">
             <button
               type="button"
-              className="w-[inherit] h-[inherit] bg-white rounded-[99em] rounded-tl-none rounded-bl-none hover:bg-[rgb(55,65,81)]/5"
+              className="h-[inherit] w-[inherit] rounded-[99em] rounded-tl-none rounded-bl-none bg-white hover:bg-[rgb(55,65,81)]/5"
             >
               <SearchIcon sx={{ color: "rgba(55, 65, 81,0.5)" }} />
             </button>
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
               </div>
             </button>
             {openCart && (
-              <div className="absolute  gap-2 translate-y-7  -translate-x-2/4 bg-gray-400 rounded-md p-5 overflow-hidden">
+              <div className="absolute  translate-y-7 -translate-x-2/4  gap-2 overflow-hidden rounded-md bg-gray-400 p-5">
                 {cartItems.map(({ title, cartQuantity, id }) => {
                   return (
                     <div key={id} className="flex  gap-5">
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
             <Link href="/contact">Contact</Link>
           </div>
         ) : (
-          <div className="flex row-auto gap-5">
+          <div className="row-auto flex gap-5">
             <button
               type="button"
               onClick={() => {
@@ -101,7 +101,7 @@ const Header: React.FC = () => {
               </div>
             </button>
             {openCart && (
-              <div className="absolute  gap-2 translate-y-7  -translate-x-2/4 bg-gray-400 rounded-md p-5 overflow-hidden">
+              <div className="absolute  translate-y-7 -translate-x-2/4  gap-2 overflow-hidden rounded-md bg-gray-400 p-5">
                 {cartItems.length === 0 ? (
                   <p>The cart is empty</p>
                 ) : (
@@ -128,7 +128,7 @@ const Header: React.FC = () => {
             </button>
 
             {isOpen && (
-              <ul className="absolute translate-y-7  bg-gray-400 rounded-md p-5 overflow-hidden">
+              <ul className="absolute translate-y-7  overflow-hidden rounded-md bg-gray-400 p-5">
                 <li>
                   <Link href="/">Home</Link>
                 </li>

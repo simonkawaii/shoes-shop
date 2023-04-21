@@ -44,7 +44,7 @@ const Home: NextPage = () => {
         <CustomDragLayer />
 
         <Header />
-        <div className="flex flex-column">
+        <div className="flex-column flex">
           {/* shopping-cart-sidebar */}
           {mobileWidth > 768 && <Sidebar />}
           {/* content-list */}

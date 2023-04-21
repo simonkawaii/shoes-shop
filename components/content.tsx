@@ -1,17 +1,17 @@
-import { useSelector } from "react-redux";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import cartSlice from "../store/features/cartSlice";
-import { RootState } from "../store/store";
-import Card from "./card";
+import React, { useCallback, useRef, useState } from "react";
 import DummyCard from "./dummyCard";
 import useGetProductsPage from "../hooks/useGetProductsPage";
 import Product from "./product";
-
+/* eslint-disable */
 export interface TproductCard {
   title: string;
   id: number;
+  thumbnail: unknown;
+  category: string;
+  price: number;
+  brand: string;
 }
-
+/* eslint-enable */
 const Content: React.FC = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
@@ -27,7 +27,6 @@ const Content: React.FC = () => {
 
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage) {
-          console.log(hasNextPage);
           setPageNumber((prev) => prev + 1);
         }
       });
@@ -70,7 +69,7 @@ const Content: React.FC = () => {
   );
 
   return (
-    <section className="grid-cols-1 grid w-full h-min-full md:grid-cols-3 lg:grid-cols-4 gap-5 m-5 md:ml-48">
+    <section className="h-min-full m-5 grid w-full grid-cols-1 gap-5 md:ml-48 md:grid-cols-3 lg:grid-cols-4">
       {results && renderContent}
       {isLoading && <DummyCard cards={10} />}
 

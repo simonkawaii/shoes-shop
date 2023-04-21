@@ -1,5 +1,6 @@
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import Card from "./card";
+import ICardTypes from "./types/cardTypes";
 
 const styles = {
   transform: "scale(80%)",
@@ -10,13 +11,14 @@ const styles = {
   zIndex: 9999,
 };
 
-const cardDragPreview: React.FC = memo(function BoxDragPreview({
+const cardDragPreview: FC<ICardTypes> = memo(function BoxDragPreview({
+  id,
   title,
   category,
   price,
   thumbnail,
   brand,
-}) {
+}: ICardTypes) {
   return (
     <div style={styles}>
       <Card
