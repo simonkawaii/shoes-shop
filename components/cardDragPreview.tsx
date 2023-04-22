@@ -13,7 +13,7 @@ const cardDragPreview: FC<TproductComponentCard> = memo(function BoxDragPreview(
         position: "absolute",
         minWidth: "250px",
         opacity: 1,
-        zIndex: 9999,
+        zIndex: "9999",
       }}
     >
       <Card {...props} />

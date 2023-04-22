@@ -72,6 +72,7 @@ const Card: FC<TproductComponentCard> = memo(function Card({
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: true });
   }, []);
+  useEffect(() => {}, []);
 
   const getStyles = (
     left: number,
@@ -99,6 +100,13 @@ const Card: FC<TproductComponentCard> = memo(function Card({
     top,
     isDragging
   );
+  useEffect(() => {
+    const owo = window.addEventListener("drag", (e) => {
+      console.log("lol");
+    });
+
+    removeEventListener("drag", owo);
+  });
 
   return (
     <div
@@ -109,7 +117,7 @@ const Card: FC<TproductComponentCard> = memo(function Card({
         transition: transition,
       }}
       ref={preview}
-      className={`   cursor-pointer  rounded-lg bg-white  shadow-md duration-200  hover:scale-105 hover:shadow-xl  `}
+      className={`cursor-pointer rounded-lg  bg-white shadow-md  duration-200 hover:scale-105 hover:shadow-xl`}
     >
       <div
         className={`  flex-col     ${regularScreen} opacity-${loadData} duration-200 ${

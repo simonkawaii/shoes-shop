@@ -28,18 +28,7 @@ const customDragLayer = () => {
       isDragging: monitor.isDragging(),
     }));
 
-  useEffect(() => {
-    const owo = window.addEventListener(
-      "drag",
-      () => {
-        document.body.style.cursor = "grabbing";
-        console.log("lol");
-      },
-      true
-    );
-
-    removeEventListener("drag", owo);
-  }, [isDragging]);
+  useEffect(() => {}, [isDragging]);
 
   const renderItem = () => {
     switch (itemType) {
@@ -67,7 +56,7 @@ const customDragLayer = () => {
       style={{
         position: "fixed",
         pointerEvents: "none",
-        zIndex: "100",
+        zIndex: "9999",
         left: "0",
         top: "0",
         width: "100vw",

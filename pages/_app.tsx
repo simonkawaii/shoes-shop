@@ -4,11 +4,12 @@ import { Provider } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { store } from "../store/store";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider store={store}>
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
         <Component {...pageProps} />
       </DndProvider>
     </Provider>

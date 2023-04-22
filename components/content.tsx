@@ -6,7 +6,6 @@ import Product from "./product";
 
 const Content: React.FC = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
-
   const { isLoading, isError, error, results, hasNextPage } =
     useGetProductsPage(pageNumber);
 
@@ -65,7 +64,7 @@ const Content: React.FC = () => {
   );
 
   return (
-    <section className="h-min-full m-5 grid w-full grid-cols-1 gap-5 md:ml-48 md:grid-cols-3 lg:grid-cols-4">
+    <section className="h-min-full  m-5 grid w-full grid-cols-1 gap-5 md:ml-48 md:grid-cols-3 lg:grid-cols-4">
       {results && renderContent}
       {isLoading && <DummyCard cards={10} />}
 

@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
     dispatch(cartTotal());
   }, [cartContainer]);
 
-  const [{ isOver }, drop] = useDrop(() => ({
+  const [{ isOver, highlighted }, drop] = useDrop(() => ({
     accept: ItemTypes.BOX,
 
     drop: ({ id, title, price }: TcartItem) => {
@@ -56,6 +56,7 @@ const Sidebar: React.FC = () => {
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
+      highlighted: !!monitor.canDrop(),
     }),
   }));
 
@@ -64,9 +65,10 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={` fixed z-[90] flex   h-screen text-white drop-shadow-xl  duration-300 sm:w-[350px]      ${
-        !open && "-translate-x-[50%]"
-      } `}
+      className={` fixed z-[90] flex   h-screen text-white drop-shadow-xl  duration-300 sm:w-[350px]   ${
+        highlighted && "-translate-x-[0%] "
+      }   ${!open && "-translate-x-[50%]"} 
+    ${isOver && "cursor-copy"}`}
       ref={drop}
     >
       <div
