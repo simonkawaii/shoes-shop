@@ -1,9 +1,11 @@
-const dummyCard: React.FC = ({ cards }: any) => {
+import React, { FC } from "react";
+
+const dummyCard: FC<any> = (cards: number) => {
   return (
     <>
       {Array(cards)
         .fill(0)
-        .map((e, index) => {
+        .map((index) => {
           return (
             // eslint-disable-next-line react/self-closing-comp
             <div

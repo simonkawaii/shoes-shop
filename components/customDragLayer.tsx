@@ -1,19 +1,9 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { useDragLayer } from "react-dnd";
 import ItemTypes from "./itemTypes";
 import CardDragPreview from "./cardDragPreview";
 
-const layerStyles = {
-  position: "fixed",
-  pointerEvents: "none",
-  zIndex: 100,
-  left: 0,
-  top: 0,
-  width: "100%",
-  height: "100%",
-};
-
-const getItemStyles = (initialOffset, currentOffset) => {
+const getItemStyles = (initialOffset: any, currentOffset: any) => {
   if (!initialOffset || !currentOffset) {
     return {
       display: "none",
@@ -38,6 +28,19 @@ const customDragLayer = () => {
       isDragging: monitor.isDragging(),
     }));
 
+  useEffect(() => {
+    const owo = window.addEventListener(
+      "drag",
+      () => {
+        document.body.style.cursor = "grabbing";
+        console.log("lol");
+      },
+      true
+    );
+
+    removeEventListener("drag", owo);
+  }, [isDragging]);
+
   const renderItem = () => {
     switch (itemType) {
       case ItemTypes.BOX:
@@ -60,7 +63,17 @@ const customDragLayer = () => {
   }
 
   return (
-    <div style={layerStyles}>
+    <div
+      style={{
+        position: "fixed",
+        pointerEvents: "none",
+        zIndex: "100",
+        left: "0",
+        top: "0",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
       <div style={getItemStyles(initialOffset, currentOffset)}>
         {renderItem()}
       </div>

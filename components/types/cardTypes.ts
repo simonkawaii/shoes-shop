@@ -7,6 +7,14 @@ export interface TproductCard {
   brand: string;
 }
 
+export type cardPreview = {
+  title: string;
+  thumbnail: string;
+  category: string;
+  price: number;
+  brand: string;
+};
+
 type positionTypes = {
   top: number;
   left: number;

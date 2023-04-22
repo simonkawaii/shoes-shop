@@ -1,17 +1,9 @@
 import React, { useCallback, useRef, useState } from "react";
 import DummyCard from "./dummyCard";
 import useGetProductsPage from "../hooks/useGetProductsPage";
+import { TproductCard } from "./types/cardTypes";
 import Product from "./product";
-/* eslint-disable */
-export interface TproductCard {
-  title: string;
-  id: number;
-  thumbnail: unknown;
-  category: string;
-  price: number;
-  brand: string;
-}
-/* eslint-enable */
+
 const Content: React.FC = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
@@ -44,23 +36,27 @@ const Content: React.FC = () => {
         return (
           <Product
             ref={lastPostRef}
+            key={id}
             category={category}
             price={price}
             title={title}
             id={id}
-            key={id}
             thumbnail={thumbnail}
             brand={brand}
+            left={0}
+            top={0}
           />
         );
       }
       return (
         <Product
+          id={id}
+          key={id}
           category={category}
           price={price}
           title={title}
-          id={id}
-          key={id}
+          left={0}
+          top={0}
           thumbnail={thumbnail}
           brand={brand}
         />

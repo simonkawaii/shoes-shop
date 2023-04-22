@@ -71,10 +71,10 @@ const Sidebar: React.FC = () => {
     >
       <div
         className={`flex ${
-          open ? "bg-purple-600" : "bg-purple-400"
+          open ? "bg-purple-600" : "bg-purple-500"
         } relative box-border  w-full flex-col  items-center pb-24 duration-300`}
       >
-        <p className="m-5">cart</p>
+        <p className=" m-5  text-[24px] font-bold">cart</p>
         <div
           className={`relative mb-[50px] flex flex-col items-center ${
             open ? "overflow-y-auto" : "overflow-y-hidden"
@@ -176,25 +176,25 @@ const Sidebar: React.FC = () => {
           isOpen(!open);
         }}
         className={`flex 
-      ${open ? "bg-purple-600" : "bg-purple-400"}
+      ${open ? "bg-purple-600" : "bg-purple-500"}
       h-16
-        w-16 translate-y-56 -translate-x-1 items-center  justify-center overflow-hidden  rounded-tr-[50%] rounded-br-[50%] p-3 duration-300 `}
+        w-16 translate-y-56 -translate-x-1 items-center  justify-center overflow-hidden  rounded-tr-[50%] rounded-br-[50%] p-3 duration-200 `}
       >
         <div
-          className={`flex h-[inherit] w-[inherit] items-center justify-center rounded-[inherit] p-3 drop-shadow-md duration-200 hover:translate-x-1 hover:scale-125 ${
-            open && "hover:-translate-x-1"
-          }`}
+          className={`flex h-[inherit] w-[inherit] items-center justify-center rounded-[inherit] p-3 drop-shadow-md duration-200 hover:scale-125 
+          `}
         >
           {!open ? (
             <ArrowBackIosNewIcon
               sx={{
-                transform: "rotate(180deg) ",
+                transform: "rotate(180deg)",
                 transition: ".2s",
               }}
             />
           ) : (
             <ArrowBackIosNewIcon
               sx={{
+                transform: " translateX(-5px)",
                 transition: ".2s",
               }}
             />

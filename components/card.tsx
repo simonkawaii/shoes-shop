@@ -78,25 +78,36 @@ const Card: FC<TproductComponentCard> = memo(function Card({
     top: number,
     isDragging: unknown
   ): {
-    transform: unknown;
-    WebkitTransform: unknown;
+    transform: string;
+    WebkitTransform: string;
     opacity: number;
-    transition: string | unknown;
+    transition: string;
   } => {
-    const transform = `translate3d(${left}px, ${top}px, 0) `;
+    const transform = `translate3d(${left}px, ${top}px, 0) scale()`;
     return {
       transform,
       WebkitTransform: transform,
       // IE fallback: hide the real node using CSS when dragging
       // because IE will ignore our custom "empty image" drag preview.
       opacity: isDragging ? 0 : 1,
-      transition: isDragging && "0s",
+      transition: isDragging ? "0s" : ".2s",
     };
   };
 
+  const { transform, WebkitTransform, opacity, transition } = getStyles(
+    left,
+    top,
+    isDragging
+  );
+
   return (
     <div
-      style={getStyles(left, top, isDragging)}
+      style={{
+        transform: transform,
+        WebkitTransform: WebkitTransform,
+        opacity: opacity,
+        transition: transition,
+      }}
       ref={preview}
       className={`   cursor-pointer  rounded-lg bg-white  shadow-md duration-200  hover:scale-105 hover:shadow-xl  `}
     >
