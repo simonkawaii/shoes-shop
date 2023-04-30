@@ -61,11 +61,9 @@ const Sidebar: React.FC = () => {
     }),
   }));
 
-  console.log(isOver);
-
-  const regularButtonStyle = `  bg-transparent ${
+  const regularButtonStyle = `   ${
     highlighted && "pointer-events-none"
-  } flex justify-center items-center relative duration-200 hover:bg-[#f89f5b] font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded`;
+  } flex justify-center items-center relative duration-200  font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded`;
 
   return (
     <div
@@ -76,8 +74,10 @@ const Sidebar: React.FC = () => {
       ref={drop}
     >
       <div
-        className={`flex ${open ? "bg-purple-600" : "bg-purple-500"} 
-        ${isOver && "bg-green-400"}
+        className={`$ flex      ${
+          isOver ? "bg-green-400" : open ? "bg-purple-600" : "bg-purple-500"
+        }
+
         relative box-border  w-full flex-col  items-center pb-24 duration-200`}
       >
         <p className=" m-5  text-[24px] font-bold">cart</p>
@@ -103,7 +103,7 @@ const Sidebar: React.FC = () => {
                       <button
                         type="button"
                         disabled={!open && true}
-                        className={`${regularButtonStyle} col-span-3  border-[#f89f5b]  text-[#f89f5b]`}
+                        className={`${regularButtonStyle} col-span-3 border-[#f89f5b]  text-[#f89f5b]  hover:bg-[#f89f5b]`}
                         onClick={() => {
                           dispatch(
                             decrementItemInCart({
@@ -137,7 +137,7 @@ const Sidebar: React.FC = () => {
                     <button
                       type="button"
                       disabled={!open && true}
-                      className={`${regularButtonStyle} col-span-3 border-[#f89f5b]  text-[#f89f5b]`}
+                      className={`${regularButtonStyle} col-span-3 border-[#f89f5b] text-[#f89f5b]  hover:bg-[#f89f5b]`}
                       onClick={() => {
                         dispatch(
                           incrementItemInCart({
@@ -193,8 +193,8 @@ const Sidebar: React.FC = () => {
           isOpen(!open);
         }}
         className={`flex 
-      ${open ? "bg-purple-600" : "bg-purple-500"}
-      ${isOver && "bg-green-400"}
+      
+      ${isOver ? "bg-green-400" : open ? "bg-purple-600" : "bg-purple-500"}
       
       h-16
         w-16 translate-y-56 -translate-x-1 items-center  justify-center overflow-hidden  rounded-tr-[50%] rounded-br-[50%] p-3 duration-200 `}
