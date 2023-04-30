@@ -100,13 +100,6 @@ const Card: FC<TproductComponentCard> = memo(function Card({
     top,
     isDragging
   );
-  useEffect(() => {
-    const owo = window.addEventListener("drag", (e) => {
-      console.log("lol");
-    });
-
-    removeEventListener("drag", owo);
-  });
 
   return (
     <div

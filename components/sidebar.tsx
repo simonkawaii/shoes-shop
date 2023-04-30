@@ -15,6 +15,7 @@ import {
   cartTotal,
 } from "../store/features/cartSlice";
 import ItemTypes from "./itemTypes";
+import Link from "next/link";
 
 export interface TcartItem {
   id: number;
@@ -60,27 +61,32 @@ const Sidebar: React.FC = () => {
     }),
   }));
 
-  const regularButtonStyle =
-    "  bg-transparent relative duration-200 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
+  console.log(isOver);
+
+  const regularButtonStyle = `  bg-transparent ${
+    highlighted && "pointer-events-none"
+  } flex justify-center items-center relative duration-200 hover:bg-[#f89f5b] font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded`;
 
   return (
     <div
       className={` fixed z-[90] flex   h-screen text-white drop-shadow-xl  duration-300 sm:w-[350px]   ${
-        highlighted && "-translate-x-[0%] "
+        highlighted && "translate-x-[0%] "
       }   ${!open && "-translate-x-[50%]"} 
     ${isOver && "cursor-copy"}`}
       ref={drop}
     >
       <div
-        className={`flex ${
-          open ? "bg-purple-600" : "bg-purple-500"
-        } relative box-border  w-full flex-col  items-center pb-24 duration-300`}
+        className={`flex ${open ? "bg-purple-600" : "bg-purple-500"} 
+        ${isOver && "bg-green-400"}
+        relative box-border  w-full flex-col  items-center pb-24 duration-200`}
       >
         <p className=" m-5  text-[24px] font-bold">cart</p>
         <div
           className={`relative mb-[50px] flex flex-col items-center ${
             open ? "overflow-y-auto" : "overflow-y-hidden"
-          } w-[90%] overflow-x-hidden duration-200 ${!open && "opacity-50"}`}
+          } w-[90%] overflow-x-hidden duration-200 ${!open && "opacity-50"}
+          ${highlighted && "opacity-[60%]"}
+          `}
         >
           {cartItems.map(({ title, cartQuantity, id }) => {
             return (
@@ -90,12 +96,14 @@ const Sidebar: React.FC = () => {
               >
                 <h1>{title} </h1>
                 <div className="flex w-full flex-row">
-                  <div className={`flex w-full justify-start gap-3`}>
+                  <div
+                    className={` grid w-full grid-cols-10 justify-start  gap-3 `}
+                  >
                     {cartQuantity >= 2 ? (
                       <button
                         type="button"
                         disabled={!open && true}
-                        className={`${regularButtonStyle}`}
+                        className={`${regularButtonStyle} col-span-3  border-[#f89f5b]  text-[#f89f5b]`}
                         onClick={() => {
                           dispatch(
                             decrementItemInCart({
@@ -110,7 +118,7 @@ const Sidebar: React.FC = () => {
                     ) : (
                       <button
                         type="button"
-                        className={`${regularButtonStyle}  border-red-500 text-red-700 hover:bg-red-500`}
+                        className={`${regularButtonStyle}  col-span-3 border-[#e53f71]  text-[#e53f71]  hover:bg-[#e53f71] `}
                         onClick={() => {
                           dispatch(
                             removeFromCart({
@@ -123,13 +131,13 @@ const Sidebar: React.FC = () => {
                         <DeleteIcon fontSize="small" />
                       </button>
                     )}
-                    <span className="flex  items-center justify-center">
+                    <span className="   flex items-center justify-center">
                       {cartQuantity}
                     </span>
                     <button
                       type="button"
                       disabled={!open && true}
-                      className={`${regularButtonStyle}`}
+                      className={`${regularButtonStyle} col-span-3 border-[#f89f5b]  text-[#f89f5b]`}
                       onClick={() => {
                         dispatch(
                           incrementItemInCart({
@@ -144,7 +152,7 @@ const Sidebar: React.FC = () => {
                     {cartQuantity >= 2 && (
                       <button
                         type="button"
-                        className={`${regularButtonStyle}  border-red-500 text-red-700 hover:bg-red-500`}
+                        className={`${regularButtonStyle}  col-span-3 border-[#e53f71]  text-[#e53f71]  hover:bg-[#e53f71] `}
                         onClick={() => {
                           dispatch(
                             removeFromCart({
@@ -166,10 +174,17 @@ const Sidebar: React.FC = () => {
         <div
           className="absolute 
           bottom-14
-          left-0
-      z-[9999] flex h-20  w-full items-center justify-end bg-[inherit] "
+          left-0 z-[9999] flex h-24  
+      w-full items-center  justify-center  bg-[inherit]  text-lg font-bold"
         >
-          <p className="m-3 text-lg font-bold ">Total: ${totalAmount}</p>
+          <div className="flex h-[100%] w-[100%] items-center justify-between  ">
+            <button
+              className={`${regularButtonStyle} m-3 border-white bg-[#e53f71]  text-lg font-bold  text-white hover:border-white  hover:bg-[#f89f5b]  hover:text-white `}
+            >
+              <Link href={"/cart"}>Go to cart!</Link>
+            </button>
+            <p className=" m-3 ">Total: ${totalAmount}</p>
+          </div>
         </div>
       </div>
       <button
@@ -179,6 +194,8 @@ const Sidebar: React.FC = () => {
         }}
         className={`flex 
       ${open ? "bg-purple-600" : "bg-purple-500"}
+      ${isOver && "bg-green-400"}
+      
       h-16
         w-16 translate-y-56 -translate-x-1 items-center  justify-center overflow-hidden  rounded-tr-[50%] rounded-br-[50%] p-3 duration-200 `}
       >

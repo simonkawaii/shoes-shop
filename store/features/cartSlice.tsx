@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface TState {
+export type TState = {
   cartItems: [];
   totalCartQuantity: number;
   totalAmount: number;
-}
+  cartQuantity: number;
+};
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -13,8 +14,8 @@ export const cartSlice = createSlice({
     addToCart: (state, action) => {
       const { cartItems, totalCartQuantity, totalAmount } = state;
 
-      const itemIndex = cartItems.findIndex((item) => {
-        return item.id === action.payload.id;
+      const itemIndex = cartItems.findIndex(({ id }) => {
+        return id === action.payload.id;
       });
 
       if (itemIndex === -1) {
@@ -28,8 +29,8 @@ export const cartSlice = createSlice({
     removeFromCart: (state, action) => {
       const { cartItems, totalCartQuantity, totalAmount } = state;
 
-      const itemIndex = cartItems.findIndex((item) => {
-        return item.id === action.payload.id;
+      const itemIndex = cartItems.findIndex(({ id }) => {
+        return id === action.payload.id;
       });
 
       if (itemIndex !== -1) {
@@ -40,8 +41,8 @@ export const cartSlice = createSlice({
     incrementItemInCart: (state, action) => {
       const { cartItems, totalCartQuantity, totalAmount } = state;
 
-      const itemIndex = cartItems.findIndex((item) => {
-        return item.id === action.payload.id;
+      const itemIndex = cartItems.findIndex(({ id }) => {
+        return id === action.payload.id;
       });
       if (itemIndex !== -1) {
         cartItems[itemIndex].cartQuantity += 1;
@@ -50,8 +51,8 @@ export const cartSlice = createSlice({
     decrementItemInCart: (state, action) => {
       const { cartItems, totalCartQuantity, totalAmount } = state;
 
-      const itemIndex = cartItems.findIndex((item) => {
-        return item.id === action.payload.id;
+      const itemIndex = cartItems.findIndex(({ id }) => {
+        return id === action.payload.id;
       });
       if (itemIndex !== -1) {
         cartItems[itemIndex].cartQuantity -= 1;
