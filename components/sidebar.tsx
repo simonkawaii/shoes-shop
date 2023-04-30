@@ -174,7 +174,7 @@ const Sidebar: React.FC = () => {
         <div
           className="absolute 
           bottom-14
-          left-0 z-[9999] flex h-24  
+          left-0 z-[9999] flex h-20  
       w-full items-center  justify-center  bg-[inherit]  text-lg font-bold"
         >
           <div className="flex h-[100%] w-[100%] items-center justify-between  ">
