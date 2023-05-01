@@ -11,7 +11,7 @@ import CustomDragLayer from "../components/customDragLayer";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "rgb(147 51 234)",
+      main: "rgb(147,51,234)",
       contrastText: "rgb(255,255,255)",
     },
     secondary: {

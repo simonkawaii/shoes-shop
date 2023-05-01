@@ -63,15 +63,13 @@ const Header: React.FC = () => {
                 setIsOpen(false);
               }}
             >
-              <div className="">
-                <Badge badgeContent={cartItems.length} color="primary">
-                  <ShoppingCartIcon />
-                </Badge>
-              </div>
+              <Badge badgeContent={cartItems.length} color="primary">
+                <ShoppingCartIcon />
+              </Badge>
             </button>
             {openCart && (
               <div className="absolute  translate-y-7 -translate-x-2/4  gap-2 overflow-hidden rounded-md bg-gray-400 p-5">
-                {cartItems.map(({ title, cartQuantity, id }) => {
+                {cartItems?.map(({ title, cartQuantity, id }) => {
                   return (
                     <div key={id} className="flex  gap-5">
                       <h1>{title} </h1>
@@ -93,17 +91,11 @@ const Header: React.FC = () => {
                 setIsOpenCart(!openCart);
                 setIsOpen(false);
               }}
-            >
-              <div className="">
-                <Badge badgeContent={cartItems.length} color="primary">
-                  <ShoppingCartIcon />
-                </Badge>
-              </div>
-            </button>
+            ></button>
             {openCart && (
               <div className="absolute  translate-y-7 -translate-x-2/4  gap-2 overflow-hidden rounded-md bg-gray-400 p-5">
                 {cartItems.length === 0 ? (
-                  <p>The cart is empty</p>
+                  <div>The cart is empty</div>
                 ) : (
                   cartItems.map(({ title, cartQuantity, id }) => {
                     return (

@@ -1,18 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 
-export type TState = {
-  cartItems: [];
+export interface TCartInitialState {
+  cartItems: any[];
   totalCartQuantity: number;
   totalAmount: number;
-  cartQuantity: number;
-};
+}
+const localStoargeInitial =
+  typeof window !== "undefined" ? localStorage.getItem("cart") : null;
 
+const localCart = localStoargeInitial
+  ? JSON.parse(localStoargeInitial).cartItems
+  : [];
+
+const initialState: TCartInitialState = {
+  cartItems: localCart,
+  totalCartQuantity: 0,
+  totalAmount: 0,
+};
+console.log(initialState);
 export const cartSlice = createSlice({
   name: "cart",
-  initialState: { cartItems: [], totalCartQuantity: 0, totalAmount: 0 },
+  initialState,
   reducers: {
     addToCart: (state, action) => {
-      const { cartItems, totalCartQuantity, totalAmount } = state;
+      const { cartItems } = state;
 
       const itemIndex = cartItems.findIndex(({ id }) => {
         return id === action.payload.id;
@@ -27,7 +39,7 @@ export const cartSlice = createSlice({
       console.log("added to cart");
     },
     removeFromCart: (state, action) => {
-      const { cartItems, totalCartQuantity, totalAmount } = state;
+      const { cartItems } = state;
 
       const itemIndex = cartItems.findIndex(({ id }) => {
         return id === action.payload.id;
@@ -39,7 +51,7 @@ export const cartSlice = createSlice({
       console.log("removed from cart");
     },
     incrementItemInCart: (state, action) => {
-      const { cartItems, totalCartQuantity, totalAmount } = state;
+      const { cartItems } = state;
 
       const itemIndex = cartItems.findIndex(({ id }) => {
         return id === action.payload.id;
@@ -49,7 +61,7 @@ export const cartSlice = createSlice({
       }
     },
     decrementItemInCart: (state, action) => {
-      const { cartItems, totalCartQuantity, totalAmount } = state;
+      const { cartItems } = state;
 
       const itemIndex = cartItems.findIndex(({ id }) => {
         return id === action.payload.id;
@@ -77,6 +89,15 @@ export const cartSlice = createSlice({
       );
       state.totalCartQuantity = quantity;
       state.totalAmount = total;
+
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          cartItems: state.cartItems,
+          totalCartQuantity: quantity,
+          totalAmount: total,
+        })
+      );
     },
   },
 });

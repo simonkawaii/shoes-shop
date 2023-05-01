@@ -46,6 +46,7 @@ const Card: FC<TproductComponentCard> = memo(function Card({
     }),
     []
   );
+
   const [loadData, setLoadData] = useState<number>(0);
   const [mobileWidth, setMoblieWidth] = useState<number>(0);
 
@@ -69,15 +70,15 @@ const Card: FC<TproductComponentCard> = memo(function Card({
       })
     );
   };
+
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: true });
   }, []);
-  useEffect(() => {}, []);
 
   const getStyles = (
     left: number,
     top: number,
-    isDragging: unknown
+    isDragging: any
   ): {
     transform: string;
     WebkitTransform: string;
@@ -95,22 +96,14 @@ const Card: FC<TproductComponentCard> = memo(function Card({
     };
   };
 
-  const { transform, WebkitTransform, opacity, transition } = getStyles(
-    left,
-    top,
-    isDragging
-  );
+  const { ...stylesFromGetStyles } = getStyles(left, top, isDragging);
 
   return (
     <div
-      style={{
-        transform: transform,
-        WebkitTransform: WebkitTransform,
-        opacity: opacity,
-        transition: transition,
-      }}
+      style={stylesFromGetStyles}
       ref={preview}
-      className={`cursor-pointer rounded-lg  bg-white shadow-md  duration-200 hover:scale-105 hover:shadow-xl`}
+      className={`cursor-pointer rounded-lg 
+         bg-white shadow-md  duration-200 hover:scale-105 hover:shadow-xl`}
     >
       <div
         className={`  flex-col     ${regularScreen} opacity-${loadData} duration-200 ${

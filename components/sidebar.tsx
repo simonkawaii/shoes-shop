@@ -2,6 +2,7 @@ import { useDrop } from "react-dnd";
 import React, { useState, useEffect } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useDispatch, useSelector } from "react-redux";
+import Snackbar from "@mui/material/Snackbar";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
@@ -16,6 +17,14 @@ import {
 } from "../store/features/cartSlice";
 import ItemTypes from "./itemTypes";
 import Link from "next/link";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export interface TcartItem {
   id: number;
@@ -25,6 +34,23 @@ export interface TcartItem {
 
 const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
+
+  const [toastOpen, setToastOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setToastOpen(true);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setToastOpen(false);
+  };
 
   const cartContainer = useSelector((state: RootState) => state.cart);
   const { cartItems, totalAmount } = cartContainer;
@@ -103,7 +129,7 @@ const Sidebar: React.FC = () => {
                       <button
                         type="button"
                         disabled={!open && true}
-                        className={`${regularButtonStyle} col-span-3 border-[#f89f5b]  text-[#f89f5b]  hover:bg-[#f89f5b]`}
+                        className={`${regularButtonStyle} col-span-3 border-[rgb(147,51,234)] text-[rgb(147,51,234)] hover:bg-[rgb(147,51,234)]`}
                         onClick={() => {
                           dispatch(
                             decrementItemInCart({
@@ -137,8 +163,9 @@ const Sidebar: React.FC = () => {
                     <button
                       type="button"
                       disabled={!open && true}
-                      className={`${regularButtonStyle} col-span-3 border-[#f89f5b] text-[#f89f5b]  hover:bg-[#f89f5b]`}
+                      className={`${regularButtonStyle} col-span-3 border-[rgb(147,51,234)] text-[rgb(147,51,234)] hover:bg-[rgb(147,51,234)]`}
                       onClick={() => {
+                        handleClick();
                         dispatch(
                           incrementItemInCart({
                             title,
@@ -152,6 +179,7 @@ const Sidebar: React.FC = () => {
                     {cartQuantity >= 2 && (
                       <button
                         type="button"
+                        disabled={!open && true}
                         className={`${regularButtonStyle}  col-span-3 border-[#e53f71]  text-[#e53f71]  hover:bg-[#e53f71] `}
                         onClick={() => {
                           dispatch(
@@ -177,13 +205,19 @@ const Sidebar: React.FC = () => {
           left-0 z-[9999] flex h-20  
       w-full items-center  justify-center  bg-[inherit]  text-lg font-bold"
         >
-          <div className="flex h-[100%] w-[100%] items-center justify-between  ">
+          <div
+            className={`flex h-[100%] w-[100%] items-center justify-between    duration-200   ${
+              highlighted && "opacity-[60%]"
+            } `}
+          >
             <button
-              className={`${regularButtonStyle} m-3 border-white bg-[#e53f71]  text-lg font-bold  text-white hover:border-white  hover:bg-[#f89f5b]  hover:text-white `}
+              disabled={!open && true}
+              type="button"
+              className={`${regularButtonStyle} m-3 border-white bg-white  text-lg font-bold  text-[rgb(147,51,234)] hover:border-white  hover:bg-green-400  hover:text-white `}
             >
               <Link href={"/cart"}>Go to cart!</Link>
             </button>
-            <p className=" m-3 ">Total: ${totalAmount}</p>
+            <div className=" m-3 ">Total: ${totalAmount}</div>
           </div>
         </div>
       </div>
@@ -220,6 +254,17 @@ const Sidebar: React.FC = () => {
           )}
         </div>
       </button>
+      <Snackbar open={toastOpen} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          sx={{
+            width: "100%",
+          }}
+        >
+          This is a success message!
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

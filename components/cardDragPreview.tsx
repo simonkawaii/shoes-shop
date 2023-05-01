@@ -1,10 +1,15 @@
 import React, { FC, memo } from "react";
 import Card from "./card";
 import { TproductComponentCard } from "./types/cardTypes";
+import { useDragDropManager } from "react-dnd";
+import ItemTypes from "./itemTypes";
 
 const cardDragPreview: FC<TproductComponentCard> = memo(function BoxDragPreview(
   props: TproductComponentCard
 ) {
+  const dragDropManager = useDragDropManager();
+  const store = dragDropManager;
+  console.log(store);
   return (
     <div
       style={{
