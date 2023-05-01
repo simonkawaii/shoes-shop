@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import { getProductsPage } from "../services/axios/axios";
 
-const useGetProductsPage = (pageNumber = 1): any => {
+const useGetProductsPage = (pageNumber = 1) => {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
