@@ -11,10 +11,12 @@ const getItemStyles = (initialOffset: any, currentOffset: any) => {
   }
   const { x, y } = currentOffset;
 
-  const transform = `translate(${x - 40}px, ${y - 40}px)`;
+  const transform = `translate(${x - 5}px, ${y - 40}px)`;
   return {
     transform,
     WebkitTransform: transform,
+
+    transition: "0s",
   };
 };
 
@@ -40,6 +42,10 @@ const customDragLayer = () => {
             title={item.title}
             thumbnail={item.thumbnail}
             brand={item.brand}
+            id={0}
+            description={""}
+            top={0}
+            left={0}
           />
         );
       default:

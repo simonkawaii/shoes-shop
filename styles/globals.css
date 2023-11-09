@@ -5,7 +5,28 @@
 ::-webkit-scrollbar {
   width: 0.5rem;
 }
-
+body {
+  font-family: "Poppins", sans-serif;
+  background: rgba(102, 95, 95, 0.1);
+}
+a:has(img),
+img {
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+a {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 ::-webkit-scrollbar-track {
   background-color: #ebebeb42;
   -webkit-border-radius: 10px;
@@ -16,4 +37,24 @@
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background: #9e9e9e;
+}
+body {
+}
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: rgba(80, 80, 80, 0.5);
+  height: 40px !important;
+  width: 40px !important;
+  border-radius: 50%;
+}
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  display: none;
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  font-size: 1.2rem !important;
+  color: white;
 }

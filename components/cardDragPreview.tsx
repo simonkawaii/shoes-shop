@@ -10,12 +10,12 @@ const cardDragPreview: FC<TproductComponentCard> = memo(function BoxDragPreview(
   return (
     <div
       style={{
-        transform: "scale(80%)",
-        WebkitTransform: "scale(80%)",
+        WebkitTransform: "scale(80%) rotate(-5deg)",
         position: "absolute",
         minWidth: "250px",
         opacity: 1,
         zIndex: "9999",
+        pointerEvents: "none",
       }}
     >
       <Card {...props} />

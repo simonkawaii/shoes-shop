@@ -3,11 +3,13 @@ import React, { FC, memo, useEffect, useState } from "react";
 import { useDrag, useDragLayer } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { getEmptyImage } from "react-dnd-html5-backend";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+
 import { addToCart } from "../store/features/cartSlice";
 import { TproductComponentCard } from "./types/cardTypes";
 import ItemTypes from "./itemTypes";
+import Link from "next/link";
+import axios from "axios";
+import Button from "./card/button";
 
 const regularScreen = `relative overflow-hidden flex justify-center items-center duration-100  h-48 `;
 
@@ -26,6 +28,15 @@ const Card: FC<TproductComponentCard> = memo(function Card({
   }));
 
   const dispatch = useDispatch();
+  const addItemToCart = (): void => {
+    dispatch(
+      addToCart({
+        title,
+        id,
+        price,
+      })
+    );
+  };
 
   const [{ isDragging }, drag, preview] = useDrag(
     () => ({
@@ -41,14 +52,20 @@ const Card: FC<TproductComponentCard> = memo(function Card({
       },
       collect: (watching) => ({
         isDragging: !!watching.isDragging(),
+        draa: !!watching.isDragging(),
       }),
       previewOptions: {},
     }),
     []
   );
-
   const [loadData, setLoadData] = useState<number>(0);
   const [mobileWidth, setMoblieWidth] = useState<number>(0);
+
+  useEffect(() => {
+    if (!thumbnail) {
+      console.log("lol");
+    }
+  }, [thumbnail]);
 
   useEffect(() => {
     setMoblieWidth(window.innerWidth);
@@ -61,16 +78,6 @@ const Card: FC<TproductComponentCard> = memo(function Card({
     window.addEventListener("resize", handleWindowWidthChange);
     return () => window.removeEventListener("resize", handleWindowWidthChange);
   }, []);
-  const addItemToCart = (): void => {
-    dispatch(
-      addToCart({
-        title,
-        id,
-        price,
-      })
-    );
-  };
-
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: true });
   }, []);
@@ -95,79 +102,67 @@ const Card: FC<TproductComponentCard> = memo(function Card({
       transition: isDragging ? "0s" : ".2s",
     };
   };
-
   const { ...stylesFromGetStyles } = getStyles(left, top, isDragging);
-
   return (
-    <div
-      style={stylesFromGetStyles}
-      ref={preview}
-      className={`cursor-pointer rounded-lg 
-         bg-white shadow-md  duration-200 hover:scale-105 hover:shadow-xl`}
+    <Link
+      href={{
+        pathname: `/products/${id}`,
+      }}
+      className={`${isDragging && "pointer-events-none"}`}
     >
       <div
-        className={`  flex-col     ${regularScreen} opacity-${loadData} duration-200 ${
-          loadData < 0 &&
-          "w-74 h-52 animate-pulse rounded-md bg-gray-400  text-transparent"
-        }`}
+        style={stylesFromGetStyles}
+        ref={preview}
+        onClick={(e) => {
+          if (isDragging) e.preventDefault();
+        }}
+        className={`cursor-pointer rounded-lg 
+         bg-white shadow-md  duration-200  hover:shadow-xl
+         
+         `}
       >
-        {mobileWidth >= 768 && (
-          <div
-            ref={drag}
-            className={` z-100 border-1 absolute right-3 top-3 left-3 z-50 flex h-10 w-10 cursor-grab items-center justify-center rounded-md border-[rgb(0,0,0)]/20 bg-gray-200/50 shadow-md duration-200 hover:scale-110`}
-          >
-            <DragIndicatorIcon
-              sx={{
-                color: "rgba(229, 231, 235,1)",
-              }}
-              style={{
-                filter: "drop-shadow(0px 0px 1px black) ",
-              }}
-            />
-          </div>
-        )}
-        <button
-          type="button"
-          onClick={addItemToCart}
-          className="border-1 absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-md border-[rgb(0,0,0)]/20 bg-gray-200/40 shadow-md duration-200 hover:scale-110 hover:bg-purple-600 "
+        <div
+          className={`  flex-col     ${regularScreen} opacity-${loadData} duration-200 ${
+            loadData < 0 &&
+            "w-74 bg-gray-400 text-transparent h-52 animate-pulse  rounded-md"
+          }
+          `}
         >
-          <AddOutlinedIcon
-            sx={{
-              color: "rgba(229, 231, 235,1)",
-            }}
-            style={{
-              filter: "drop-shadow(0px 0px 1px black) ",
+          {mobileWidth >= 768 && <Button buttonType="drag" drag={drag} />}
+          <Button buttonType="add" addme={addItemToCart} />
+          <img
+            className={`  pointer-events-none h-full w-full rounded-tl-lg rounded-tr-lg object-cover     `}
+            src={thumbnail}
+            alt={title}
+            onLoad={() => {
+              setLoadData(100);
             }}
           />
-        </button>
+        </div>
 
-        <img
-          className={`  pointer-events-none h-full w-full rounded-tl-lg rounded-tr-lg object-cover     `}
-          src={thumbnail}
-          alt={title}
-          onLoad={() => {
-            setLoadData(100);
-          }}
-        />
-      </div>
+        <div className="m-3 flex flex-col overflow-hidden ">
+          <h4 className="truncate  font-bold">{title}</h4>
 
-      <div className="m-3 flex flex-col overflow-hidden ">
-        <h3 className="truncate">category: {category}</h3>
-        <p className="truncate">model: {title}</p>
-        <p className="truncate">brand: {brand}</p>
-        <div className="m-3 flex  justify-end">
-          <span className=" text-xl">
-            <b>
-              $
-              {price?.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </b>
-          </span>
+          <h5 className="text-gray-400  truncate font-semibold">
+            category: {category}
+          </h5>
+          <br />
+          <p className="truncate">model: {title}</p>
+          <p className="truncate">brand: {brand}</p>
+          <div className="m-3 flex  justify-end">
+            <span className=" text-xl">
+              <b>
+                $
+                {price?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </b>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 });
 

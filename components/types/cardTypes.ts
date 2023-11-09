@@ -5,6 +5,9 @@ export interface TproductCard {
   category: string;
   price: number;
   brand: string;
+  description?: string;
+  stock?: string;
+  images?: string[];
 }
 
 export type cardPreview = {
@@ -16,8 +19,8 @@ export type cardPreview = {
 };
 
 type positionTypes = {
-  top: number;
-  left: number;
+  top?: number;
+  left?: number;
 };
 
 export type TproductComponentCard = TproductCard & positionTypes;

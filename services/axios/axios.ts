@@ -5,13 +5,28 @@ export const api = axios.create({
   baseURL: "https://dummyjson.com/products",
 });
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getProductsPage = async (pageParam = 1, options = {}) => {
+  const amountOfItemsToShow = 10;
+  const amountOfItemsToSkip = 10;
+  const response = await api.get(
+    `/?limit=10&skip=${pageParam * amountOfItemsToShow - amountOfItemsToSkip}`
+  );
+
+  return response.data;
+};
+
+export const searchProductsPage = async (
+  pageParam = 1,
+  query: string,
+  options = {}
+) => {
   const amountOfItemsToShow = 10;
   const amountOfItemsToSkip = 10;
 
   const response = await api.get(
-    `/?limit=10&skip=${pageParam * amountOfItemsToShow - amountOfItemsToSkip}`,
+    `/search?q=${query}&?limit=10&skip=${
+      pageParam * amountOfItemsToShow - amountOfItemsToSkip
+    }`,
     options
   );
 

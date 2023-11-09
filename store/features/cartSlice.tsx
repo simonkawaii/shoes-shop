@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useEffect } from "react";
 
 export interface TCartInitialState {
   cartItems: any[];
@@ -35,6 +34,27 @@ export const cartSlice = createSlice({
         cartItems.push(tempProduct);
       } else {
         cartItems[itemIndex].cartQuantity += 1;
+      }
+      console.log("added to cart");
+    },
+    addItemWithQuantity: (state, action) => {
+      const { cartItems } = state;
+
+      const { title, id, quantity } = action.payload;
+
+      const itemIndex = cartItems.findIndex(({ id }) => {
+        return id === action.payload.id;
+      });
+
+      if (itemIndex === -1) {
+        const tempProduct = {
+          title,
+          id,
+          cartQuantity: quantity,
+        };
+        cartItems.push(tempProduct);
+      } else {
+        cartItems[itemIndex].cartQuantity += quantity;
       }
       console.log("added to cart");
     },
@@ -107,6 +127,7 @@ export const {
   removeFromCart,
   incrementItemInCart,
   decrementItemInCart,
+  addItemWithQuantity,
   cartTotal,
 } = cartSlice.actions;
 

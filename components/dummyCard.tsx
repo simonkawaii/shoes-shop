@@ -1,13 +1,12 @@
 import React, { FC } from "react";
 
-const dummyCard: FC<any> = (cards: number) => {
+const dummyCard: FC<any> = ({ cards }) => {
   return (
     <>
       {Array(cards)
         .fill(0)
-        .map((index) => {
+        .map((props, index) => {
           return (
-            // eslint-disable-next-line react/self-closing-comp
             <div
               className="flex animate-pulse flex-col opacity-0"
               key={index}
